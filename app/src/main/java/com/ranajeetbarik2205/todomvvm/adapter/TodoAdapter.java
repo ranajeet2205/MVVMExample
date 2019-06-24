@@ -49,6 +49,10 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.MyViewHolder> 
         return items.size();
     }
 
+    public Todo getTodoPosition(int position){
+        return items.get(position);
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TodoListBinding todoListBinding;
 

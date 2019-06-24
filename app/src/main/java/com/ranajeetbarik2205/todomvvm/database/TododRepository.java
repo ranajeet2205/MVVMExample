@@ -29,6 +29,10 @@ public class TododRepository {
 
     }
 
+    public void deleteData(Todo todo){
+        new DeleteDataTask(todoDao).execute(todo);
+    }
+
     public class InsertDataTask extends AsyncTask<Todo,Void,Void>{
 
         private TodoDao todoDao;
@@ -53,4 +57,23 @@ public class TododRepository {
             super.onPostExecute(aVoid);
         }
     }
+
+    public class DeleteDataTask extends AsyncTask<Todo,Void,Void>{
+        private TodoDao todoDao;
+
+        public DeleteDataTask(TodoDao todoDao){
+            this.todoDao = todoDao;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Todo... todos) {
+            todoDao.deleteWord(todos[0]);
+            return null;
+        }
+    }
+
 }

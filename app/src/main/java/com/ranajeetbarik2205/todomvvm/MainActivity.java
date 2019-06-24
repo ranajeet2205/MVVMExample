@@ -8,11 +8,14 @@ import com.ranajeetbarik2205.todomvvm.databinding.ActivityMainBinding;
 import com.ranajeetbarik2205.todomvvm.entity.Todo;
 import com.ranajeetbarik2205.todomvvm.viewmodel.MainViewModel;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.view.Menu;
@@ -51,7 +54,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
 
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Todo todo = todoAdapter.getTodoPosition(position);
+
+                mainViewModel.delete(todo);
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(binding.includedContentMain.recyclerView);
 
     }
 

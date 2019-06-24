@@ -31,4 +31,7 @@ public class MainViewModel extends AndroidViewModel {
         tododRepository.insertData(todo);
     }
 
+    public void delete(Todo todo){
+        tododRepository.deleteData(todo);
+    }
 }
